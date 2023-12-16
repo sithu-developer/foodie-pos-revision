@@ -44,43 +44,43 @@ const sideBarItems = [
         id : 1,
         name : "Orders",
         icon : <DiningIcon/>,
-        href : "/backoffice/orders"
+        href : "/backoffice/order"
     },
     {   
         id : 2,
         name : "Menu Categories",
         icon : <CategoryIcon/>,
-        href : "/backoffice/menuCategories"
+        href : "/backoffice/menu-category"
     },
     {   
         id : 3,
         name : "Menus",
         icon : <RestaurantMenuIcon/>,
-        href : "/backoffice/menus"
+        href : "/backoffice/menu"
     },
     {     
         id : 4,
         name : "Addon Categories",
         icon : <EggAltIcon/>,
-        href : "/backoffice/addonCategories"
+        href : "/backoffice/addon-category"
     },
     {   
         id : 5,
         name : "Addons",
         icon : <EggIcon/>,
-        href : "/backoffice/addons"
+        href : "/backoffice/addon"
     },
     {   
         id : 6,
         name : "Tables",
         icon : <TableBarIcon/>,
-        href : "/backoffice/tables"
+        href : "/backoffice/table"
     },
     {   
         id : 7,
         name : "Locations",
         icon : <LocationOnIcon/>,
-        href : "/backoffice/locations"
+        href : "/backoffice/location"
     },
     {   
         id : 8,

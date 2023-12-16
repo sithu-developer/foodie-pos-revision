@@ -1,6 +1,7 @@
-import { CompanySliceInitialState } from "@/types/company";
+import { CompanySliceInitialState, UpdateCompanyOptions } from "@/types/company";
+import { config } from "@/util/config";
 import { Company } from "@prisma/client";
-import { PayloadAction, createSlice } from "@reduxjs/toolkit";
+import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 const initialState :  CompanySliceInitialState = {
     item : null,
@@ -8,13 +9,31 @@ const initialState :  CompanySliceInitialState = {
     error : null
 }
 
+export const updateCompany = createAsyncThunk("companySlice/updateCompany" , async( options : UpdateCompanyOptions , thunkApi ) => {
+    const {id , name , street , township , city , onSuccess , onError} = options;
+    try {
+        const response = await fetch(`${config.apiBaseUrl}/company` , {
+            method : "PUT",
+            headers : {
+                "content-type" : "application/json"
+            },
+            body : JSON.stringify({ id , name , street , township , city })
+        });
+        const { company } = await response.json();
+        thunkApi.dispatch(setCompany(company))
+        onSuccess && onSuccess();
+    } catch(err) {
+        onError && onError();
+    }
+})
+
 const companySlice = createSlice({
     name : "companySlice",
     initialState ,
     reducers : {
         setCompany : (state , action : PayloadAction<Company>) => {
             state.item = action.payload;
-        }
+        },
     }
 })
 
