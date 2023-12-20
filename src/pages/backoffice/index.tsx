@@ -6,11 +6,11 @@ const BackofficePage = () => {
     const { data : session} = useSession();
     const router = useRouter()
 
-    if(session) router.push("/backoffice/orders");
+    if(session) router.push("/backoffice/order");
     
     return (
         <Box sx={{ width : "100vw" , height : "80vh" , display : "flex" , justifyContent : "center" , alignItems : "center"}}>
-            <Button variant="contained" onClick={() => signIn("google" , { callbackUrl : "/backoffice/orders"})}>Sign In</Button>
+            <Button variant="contained" onClick={() => signIn("google" , { callbackUrl : "/backoffice/order"})}>Sign In</Button>
         </Box>
     )
 }

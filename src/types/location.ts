@@ -14,3 +14,21 @@ export interface CreateLocationOptions extends BaseOptions {
     township : string;
     city : string;
 }
+
+export interface UpdateLocationOptions extends BaseOptions , CreateLocationOptions {
+    id : number;
+}
+
+export interface DeleteLocationOptions extends BaseOptions {
+    id : number;
+}
+
+export interface RestoreLocationOptions extends BaseOptions {
+    id : number;
+    isRestore : boolean;
+}
+
+export interface DeleteLocationPermanentlyOptions extends BaseOptions {
+    id : number ;
+    isPermanent : boolean;
+}
