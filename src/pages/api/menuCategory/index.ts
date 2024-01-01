@@ -21,8 +21,15 @@ export default async function handler(
         const updatedMenuCategory = await prisma.menuCategory.update({ data : { name } , where : { id }});
         return res.status(200).json({ updatedMenuCategory });
     } else if(method === "POST") {
-      const { name , available } = req.body as NewMenuCategoryOptions;
-      if(!name) return res.status(400).send("Bad request");
+      const { name , available , selectedLocationId } = req.body as NewMenuCategoryOptions;
+      const isValid = name && selectedLocationId;
+      if(!isValid) return res.status(400).send("Bad request");
+      const location = await prisma.location.findUnique({ where : { id : selectedLocationId}});
+      if(!location) return res.status(400).send("Bad request");
+      const newMenuCategory = await prisma.menuCategory.create({ data : { name , companyId : location.companyId }});
+      if(available === false) {
+        // here
+      }
       // const menuCategory = await prisma.menuCategory.create({ data : { name , }})
     }
   res.status(405).send("Invalid Method")

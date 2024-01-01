@@ -1,4 +1,5 @@
 import DeleteComfirmation from "@/components/DeleteComfirmation";
+import WarningLocation from "@/components/WarningLocation";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { deleteLocation, updateLocation } from "@/store/slices/location";
 import { UpdateLocationOptions } from "@/types/location";
@@ -13,7 +14,8 @@ const LocationDetailPage = () => {
     const currentLocation = locations.find(item => item.id === currentLocationId);
     const [updatedLocation , setUpdatedLocation] = useState<UpdateLocationOptions>();
     const dispatch = useAppDispatch();
-    const [open , setOpen ] = useState<boolean>(false)
+    const [open , setOpen ] = useState<boolean>(false);
+    const [openWarningLocation , setOpenWarningLocation ] = useState<boolean>(false);
 
     useEffect(() => {
         if(currentLocation) {
@@ -28,7 +30,13 @@ const LocationDetailPage = () => {
     }
 
     const handleDeleteLocation = () => {
-        dispatch(deleteLocation({ id : currentLocation.id , onSuccess : () => router.push("/backoffice/location")}));
+        const selectedLocationId = Number(localStorage.getItem("selectedLocationId"));
+        if(selectedLocationId === currentLocation.id) {
+            setOpen(false);
+            setOpenWarningLocation(true);
+        } else {
+            dispatch(deleteLocation({ id : currentLocation.id , onSuccess : () => router.push("/backoffice/location")}));
+        }
     }
 
     return (
@@ -45,7 +53,8 @@ const LocationDetailPage = () => {
                 <Button variant="contained" onClick={() => router.push("/backoffice/location")}>Cancel</Button>
                 <Button variant="contained" onClick={handleUpdateLocation}>Update</Button>
             </Box>
-            <DeleteComfirmation open={open} setOpen={setOpen} itemName="Location !" handleDeleteFunction={handleDeleteLocation} />
+            <DeleteComfirmation open={open} setOpen={setOpen} itemName="Location !" handleDeleteFunction={handleDeleteLocation} />                
+            <WarningLocation openWarningLocation={openWarningLocation} setOpenWarningLocation={setOpenWarningLocation} />
         </Box>
     )
 } 

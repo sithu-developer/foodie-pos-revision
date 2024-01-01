@@ -15,4 +15,5 @@ export interface UpdateMenuCateogryOptions extends BaseOptions {
 export interface NewMenuCategoryOptions extends BaseOptions {
     name : string;
     available : boolean;
+    selectedLocationId ?: number;
 }

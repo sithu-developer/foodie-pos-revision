@@ -18,7 +18,7 @@ const NewMenuCategoryLayout = ( { open , setOpen } : Props) => {
     const dispatch = useAppDispatch();
 
     const handleCreateMenuCategory = () => {
-        dispatch(createMenuCategory({ ... newMenuCategory , }))
+        dispatch(createMenuCategory({ ... newMenuCategory , selectedLocationId : Number(localStorage.getItem("selectedLocationId")) }))
     }
 
     return (
