@@ -7,13 +7,14 @@ export interface MenuCategorySliceInitialState {
     error : Error | null
 }
 
-export interface UpdateMenuCateogryOptions extends BaseOptions {
+export interface UpdatedMenuCateogryOptions extends BaseOptions {
     id : number;
     name : string;
+    availabledLocationIds : number[];
 }
 
 export interface NewMenuCategoryOptions extends BaseOptions {
     name : string;
-    available : boolean;
+    availabledLocationIds : number[];
     selectedLocationId ?: number;
 }

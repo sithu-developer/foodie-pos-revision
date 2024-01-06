@@ -1,7 +1,8 @@
-import { MenuCategorySliceInitialState, NewMenuCategoryOptions, UpdateMenuCateogryOptions } from "@/types/menuCategory";
+import { MenuCategorySliceInitialState, NewMenuCategoryOptions, UpdatedMenuCateogryOptions } from "@/types/menuCategory";
 import { config } from "@/util/config";
 import { MenuCategory } from "@prisma/client";
 import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { addDisabledLocationMenuCategories } from "./disabledLocationMenuCategory";
 
 const initialState :  MenuCategorySliceInitialState = {
     items : [],
@@ -9,7 +10,7 @@ const initialState :  MenuCategorySliceInitialState = {
     error : null
 }
 
-export const updateMenuCategory = createAsyncThunk("menuCategorySlice/updateMenuCategory" , async(options : UpdateMenuCateogryOptions , thunkApi) => {
+export const updateMenuCategory = createAsyncThunk("menuCategorySlice/updateMenuCategory" , async(options : UpdatedMenuCateogryOptions , thunkApi) => {
     const {id , name , onError , onSuccess } = options;
     try{
         const response = await fetch(`${config.apiBaseUrl}/menuCategory?id=${id}` , {
@@ -27,17 +28,19 @@ export const updateMenuCategory = createAsyncThunk("menuCategorySlice/updateMenu
     }   
 })
 
-export const createMenuCategory = createAsyncThunk("menuCategorySlice/createMenuCategory" , async( options : NewMenuCategoryOptions ) => {
-    const { name , available , selectedLocationId , onError , onSuccess } = options;
+export const createMenuCategory = createAsyncThunk("menuCategorySlice/createMenuCategory" , async( options : NewMenuCategoryOptions , thunkApi ) => {
+    const { name , availabledLocationIds , selectedLocationId , onError , onSuccess } = options;
     try {
         const response = await fetch(`${config.apiBaseUrl}/menuCategory` , { 
             method : "POST",
             headers : {
                 "content-type" : "application/json"
             },
-            body : JSON.stringify({ name , available , selectedLocationId })
+            body : JSON.stringify({ name , availabledLocationIds , selectedLocationId })
         });
-        const {} = await response.json();
+        const { newMenuCategory , disabledLocationMenuCategories } = await response.json();
+        thunkApi.dispatch(addMenuCategory(newMenuCategory) );
+        thunkApi.dispatch(addDisabledLocationMenuCategories(disabledLocationMenuCategories));
         onSuccess && onSuccess();
     } catch (err) {
         onError && onError();
@@ -53,10 +56,13 @@ const menuCategorySlice = createSlice({
         },
         replaceMenuCategory : (state , action : PayloadAction<MenuCategory>) => {
             state.items = state.items.map(item => item.id === action.payload.id ? action.payload : item );
+        },
+        addMenuCategory : (state , action : PayloadAction<MenuCategory> ) => {
+            state.items = [... state.items , action.payload ];
         }
     }
 })
 
-export const { setMenuCategories , replaceMenuCategory } = menuCategorySlice.actions;
+export const { setMenuCategories , replaceMenuCategory , addMenuCategory } = menuCategorySlice.actions;
 
 export default menuCategorySlice.reducer;

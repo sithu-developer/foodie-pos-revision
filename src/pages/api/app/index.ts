@@ -41,7 +41,7 @@ export default async function handler(
           {name : "Default Addon 2"},
           {name : "Default Addon 3"},
         ];
-        const newAddons = await prisma.$transaction(addons.map(item => prisma.addon.create({ data : { name : item.name , addonCategoryId : newAddonCategory.id}})))
+        const newAddons = await prisma.$transaction( addons.map(item => prisma.addon.create({ data : { name : item.name , addonCategoryId : newAddonCategory.id}})))
         const newTable = await prisma.table.create({ data : {name : "01" , locationId : newLocation.id }})
         return res.status(200).json({
           user : newUser,

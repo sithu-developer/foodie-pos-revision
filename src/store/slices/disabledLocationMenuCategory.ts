@@ -3,7 +3,7 @@ import { DisabledLocationMenuCategory } from "@prisma/client";
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
 const initialState :  DisabledLocationMenuCategorySliceInitialState = {
-    item : [],
+    items : [],
     isLoading : false ,
     error : null
 }
@@ -13,11 +13,14 @@ const disabledLocationMenuCategorySlice = createSlice({
     initialState ,
     reducers : {
         setDisabledLocationMenuCategories : (state , action : PayloadAction<DisabledLocationMenuCategory[]>) => {
-            state.item = action.payload;
+            state.items = action.payload;
+        },
+        addDisabledLocationMenuCategories : (state , action : PayloadAction<DisabledLocationMenuCategory[]>) => {
+            state.items = [ ...state.items , ...action.payload ]
         }
     }
 })
 
-export const { setDisabledLocationMenuCategories } = disabledLocationMenuCategorySlice.actions;
+export const { setDisabledLocationMenuCategories , addDisabledLocationMenuCategories } = disabledLocationMenuCategorySlice.actions;
 
 export default disabledLocationMenuCategorySlice.reducer;
