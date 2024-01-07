@@ -1,3 +1,4 @@
+import DeleteComfirmation from "@/components/DeleteComfirmation";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { updateMenuCategory } from "@/store/slices/menuCategory";
 import { UpdatedMenuCateogryOptions } from "@/types/menuCategory";
@@ -14,9 +15,9 @@ const MenuCategoryDetailPage = () => {
     const [updatedMenuCategory , setUpdatedMenuCategory ] = useState<UpdatedMenuCateogryOptions>();
     const dispatch = useAppDispatch();
     const allLocations = useAppSelector(state => state.location.items);
-    const locations = allLocations.filter(item => !item.isArchived );
+    const locations = allLocations.filter(item => !item.isArchived ); // *** cannot use as useEffect's Dependency
     const disabledLocationMenuCategories = useAppSelector(store => store.disabledLocationMenuCategory.items);
-
+    const [openComfirmation , setOpenComfirmation ] = useState<boolean>(false);
 
     useEffect(() => {
         if(currentMenuCategory && disabledLocationMenuCategories && menuCategoryId && locations ) {
@@ -25,21 +26,25 @@ const MenuCategoryDetailPage = () => {
             const currentAvailabledLocationIds = locations.filter(item => !currentDisabledLocationIds.includes(item.id)).map(item => item.id);
             setUpdatedMenuCategory({ id : menuCategoryId , name : currentMenuCategory.name , availabledLocationIds : currentAvailabledLocationIds });
         }
-    } , [ currentMenuCategory , menuCategoryId , disabledLocationMenuCategories , locations ]);
+    } , [ currentMenuCategory , menuCategoryId , disabledLocationMenuCategories , allLocations ]);
 
     if(!currentMenuCategory || !updatedMenuCategory ) return null;
 
     const handleUpdateMenuCategory = () => {
-        dispatch(updateMenuCategory({ id : menuCategoryId , name : updateMenuCategory.name , availabledLocationIds: updatedMenuCategory.availabledLocationIds
-            ,onSuccess : () => router.push("/backoffice/menu-category")
-        }));
+      dispatch(updateMenuCategory({ ...updatedMenuCategory 
+          ,onSuccess : () => router.push("/backoffice/menu-category")
+      }));
+    }
+
+    const handleDeleteMenuCategory = () => {
+      console.log("deleted")
     }
 
     return (
         <Box sx={{ display : "flex" , flexDirection : "column" , gap : "20px"}}>
             <Box sx={{display : "flex" , justifyContent : "space-between"}}>
                 <Typography variant="h6">{currentMenuCategory.name} Detail Page</Typography>
-                <Button variant="outlined"  color="error">Delete</Button>
+                <Button variant="outlined"  color="error" onClick={() => setOpenComfirmation(true)} >Delete</Button>
             </Box>
             <TextField defaultValue={currentMenuCategory.name} onChange={( event ) => setUpdatedMenuCategory({...updatedMenuCategory , name : event.target.value})} />
             <FormControl>
@@ -48,9 +53,9 @@ const MenuCategoryDetailPage = () => {
                   multiple
                   label="Available for (locations) "
                   value={updatedMenuCategory.availabledLocationIds}
-                  onChange={() => { }}
+                  onChange={(event) => setUpdatedMenuCategory({...updatedMenuCategory , availabledLocationIds : event.target.value as number[]})}
                   input={<OutlinedInput label="Tag" />}
-                  renderValue={(selected) => <Box sx={{ display : "flex" , flexWrap : "wrap" , gap : "10px"}}>{
+                  renderValue={(selected) => <Box sx={{ display : "flex" , flexWrap : "wrap" , gap : "5px"}}>{
                     selected.map(item => {
                         const location = locations.find(location => location.id === item);
                         if(location) return <Chip key={location.id} label={location.name} />
@@ -78,6 +83,7 @@ const MenuCategoryDetailPage = () => {
                 <Button variant="contained" onClick={() => router.push("/backoffice/menu-category")}>Cancel</Button>
                 <Button variant="contained" disabled={updatedMenuCategory.name.length === 0} onClick={handleUpdateMenuCategory}>Update</Button>
             </Box>
+            <DeleteComfirmation open={openComfirmation} setOpen={setOpenComfirmation} itemName="Menu Category" handleDeleteFunction={handleDeleteMenuCategory} />
         </Box>
     )
 }

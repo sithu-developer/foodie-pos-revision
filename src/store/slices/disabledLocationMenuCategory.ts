@@ -17,10 +17,16 @@ const disabledLocationMenuCategorySlice = createSlice({
         },
         addDisabledLocationMenuCategories : (state , action : PayloadAction<DisabledLocationMenuCategory[]>) => {
             state.items = [ ...state.items , ...action.payload ]
+        },
+        replaceDisabledLocationMenuCategories : (state , action : PayloadAction<DisabledLocationMenuCategory[]>) => {
+            state.items = [...state.items , ...action.payload];
+        },
+        preRemoveDisabledLcoatonMenuCategoriesWithMenuCategoryId : (state , action : PayloadAction<number>) => { // this action is for preRemove of replaceDisabled
+            state.items = state.items.filter(item => item.menuCategoryId !== action.payload);
         }
     }
 })
 
-export const { setDisabledLocationMenuCategories , addDisabledLocationMenuCategories } = disabledLocationMenuCategorySlice.actions;
+export const { setDisabledLocationMenuCategories , addDisabledLocationMenuCategories , replaceDisabledLocationMenuCategories , preRemoveDisabledLcoatonMenuCategoriesWithMenuCategoryId } = disabledLocationMenuCategorySlice.actions;
 
 export default disabledLocationMenuCategorySlice.reducer;

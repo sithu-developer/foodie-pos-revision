@@ -61,7 +61,7 @@ export default async function handler(
         const locations = await prisma.location.findMany({ where : { companyId : company.id  }});
         const locationIds = locations.map(item => item.id);
         const disabledLocationMenuCategories = await prisma.disabledLocationMenuCategory.findMany({ where : { locationId : { in : locationIds } , isArchived : false }});
-        const menuCategories = await prisma.menuCategory.findMany({ where : { companyId : company.id }});
+        const menuCategories = await prisma.menuCategory.findMany({ where : { companyId : company.id } , orderBy : { id : "asc"}});
         const menuCategoryIds = menuCategories.map(item => item.id);
         const menuCategoryMenus = await prisma.menuCategoryMenu.findMany({ where : { menuCategoryId : { in : menuCategoryIds }}})
         const menuIds = menuCategoryMenus.map(item => item.menuId);

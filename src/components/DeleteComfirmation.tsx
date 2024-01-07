@@ -12,7 +12,7 @@ const DeleteComfirmation = ({open , setOpen , itemName , handleDeleteFunction } 
         <Dialog open={open} onClose={() => setOpen(false)}>
             <DialogTitle>Delete</DialogTitle>
             <DialogContent>
-                <Typography>Are you sure that you want to delete this <span style={{ color : "red"}}>{itemName}</span></Typography>
+                <Typography>Are you sure that you want to delete this <span style={{ color : "red"}}>{itemName}</span>?</Typography>
             </DialogContent>
             <DialogActions>
                 <Button variant="contained" onClick={() => setOpen(false)}>Cancel</Button>
