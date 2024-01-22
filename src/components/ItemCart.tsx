@@ -12,9 +12,10 @@ interface Props {
     icon : ReactNode;
     href ?: string;
     fromLocationPage ?: boolean;
+    opacity ?: number;
 }
 
-const ItemCart = ({ id , icon , name , href , fromLocationPage } : Props) => {
+const ItemCart = ({ id , icon , name , href , fromLocationPage , opacity = 1 } : Props) => {
     const selectedLocationId = useAppSelector(state => state.location.selectedLocationId);
     const dispatch = useAppDispatch();
     const router = useRouter();
@@ -22,7 +23,7 @@ const ItemCart = ({ id , icon , name , href , fromLocationPage } : Props) => {
     if(href) {
         return (
             <Link href={href} style={{ textDecoration : "none"}}>
-                <Paper elevation={5} sx={{ width : "200px" , height : "200px" , display : "flex" , flexDirection : "column" , justifyContent : "center" , alignItems : "center"}}>
+                <Paper elevation={5} sx={{ opacity , width : "200px" , height : "200px" , display : "flex" , flexDirection : "column" , justifyContent : "center" , alignItems : "center"}}>
                     <Box>{icon}</Box>
                     <Typography variant="h6" sx={{ textAlign : "center"}}>{name}</Typography>
                 </Paper>

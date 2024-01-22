@@ -1,7 +1,7 @@
 import { MenuCategoryMenu } from "@prisma/client";
 
 export interface MenuCategoryMenuSliceInitialState {
-    item : MenuCategoryMenu[] ,
+    items : MenuCategoryMenu[] ,
     isLoading : boolean,
     error : Error | null
 }

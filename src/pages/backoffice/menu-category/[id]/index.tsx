@@ -21,10 +21,10 @@ const MenuCategoryDetailPage = () => {
 
     useEffect(() => {
         if(currentMenuCategory && disabledLocationMenuCategories && menuCategoryId && locations ) {
-            const currentDisabledLocationMenuCategories = disabledLocationMenuCategories.filter(item => item.menuCategoryId === menuCategoryId)
-            const currentDisabledLocationIds = currentDisabledLocationMenuCategories.map(item => item.locationId);
-            const currentAvailabledLocationIds = locations.filter(item => !currentDisabledLocationIds.includes(item.id)).map(item => item.id);
-            setUpdatedMenuCategory({ id : menuCategoryId , name : currentMenuCategory.name , availabledLocationIds : currentAvailabledLocationIds });
+          const currentDisabledLocationMenuCategories = disabledLocationMenuCategories.filter(item => item.menuCategoryId === menuCategoryId)
+          const currentDisabledLocationIds = currentDisabledLocationMenuCategories.map(item => item.locationId);
+          const currentAvailabledLocationIds = locations.filter(item => !currentDisabledLocationIds.includes(item.id)).map(item => item.id);
+          setUpdatedMenuCategory({ id : menuCategoryId , name : currentMenuCategory.name , availabledLocationIds : currentAvailabledLocationIds });
         }
     } , [ currentMenuCategory , menuCategoryId , disabledLocationMenuCategories , allLocations ]);
 
@@ -43,7 +43,7 @@ const MenuCategoryDetailPage = () => {
     return (
         <Box sx={{ display : "flex" , flexDirection : "column" , gap : "20px"}}>
             <Box sx={{display : "flex" , justifyContent : "space-between"}}>
-                <Typography variant="h6">{currentMenuCategory.name} Detail Page</Typography>
+                <Typography variant="h6">{currentMenuCategory.name}'s Detail Page</Typography>
                 <Button variant="outlined"  color="error" onClick={() => setOpenComfirmation(true)} >Delete</Button>
             </Box>
             <TextField defaultValue={currentMenuCategory.name} onChange={( event ) => setUpdatedMenuCategory({...updatedMenuCategory , name : event.target.value})} />
