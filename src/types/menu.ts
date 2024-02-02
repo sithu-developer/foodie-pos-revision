@@ -9,7 +9,11 @@ export interface MenuSliceInitialState {
 
 export interface CreateMenuOptions extends BaseOptions {
     name : string;
-    price ?: number;
-    detail ?: string;
+    price ?: number | null;
+    detail ?: string | null;
     menuCategoryIds : number[];
+}
+
+export interface UpdatedMenuOptions extends BaseOptions , CreateMenuOptions {
+    id : number
 }
