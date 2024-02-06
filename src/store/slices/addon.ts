@@ -3,7 +3,7 @@ import { Addon } from "@prisma/client";
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
 const initialState :    AddonSliceInitialState = {
-    item : [],
+    items : [],
     isLoading : false ,
     error : null
 }
@@ -13,7 +13,7 @@ const addonSlice = createSlice({
     initialState ,
     reducers : {
         setAddons : (state , action : PayloadAction<Addon[]>) => {
-            state.item = action.payload;
+            state.items = action.payload;
         }
     }
 })

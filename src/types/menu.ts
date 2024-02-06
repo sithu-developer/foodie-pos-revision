@@ -14,6 +14,6 @@ export interface CreateMenuOptions extends BaseOptions {
     menuCategoryIds : number[];
 }
 
-export interface UpdatedMenuOptions extends BaseOptions , CreateMenuOptions {
+export interface UpdateMenuOptions extends BaseOptions , CreateMenuOptions {
     id : number
 }

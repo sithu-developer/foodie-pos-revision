@@ -17,10 +17,14 @@ const menuCategoryMenuSlice = createSlice({
         },
         addMenuCategoryMenus : (state , action : PayloadAction<MenuCategoryMenu[]>) => {
             state.items = [...action.payload , ...state.items];
+        },
+        replaceMenuCategoryMenus : (state , action : PayloadAction<MenuCategoryMenu[]>) => {
+            state.items = state.items.filter(item => item.menuId !== action.payload[0].menuId );
+            state.items = [...state.items , ...action.payload ];
         }
     }
 })
 
-export const { setMenuCategoryMenus , addMenuCategoryMenus } = menuCategoryMenuSlice.actions;
+export const { setMenuCategoryMenus , addMenuCategoryMenus , replaceMenuCategoryMenus } = menuCategoryMenuSlice.actions;
 
 export default menuCategoryMenuSlice.reducer;

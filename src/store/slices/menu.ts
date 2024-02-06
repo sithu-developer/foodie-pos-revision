@@ -1,8 +1,8 @@
-import { CreateMenuOptions, MenuSliceInitialState } from "@/types/menu";
+import { CreateMenuOptions, MenuSliceInitialState, UpdateMenuOptions } from "@/types/menu";
 import { config } from "@/util/config";
 import { Menu } from "@prisma/client";
 import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { addMenuCategoryMenus } from "./menuCategoryMenu";
+import { addMenuCategoryMenus, replaceMenuCategoryMenus } from "./menuCategoryMenu";
 
 const initialState :  MenuSliceInitialState = {
     items : [],
@@ -29,6 +29,25 @@ export const createMenu = createAsyncThunk("menuSlice/createMenu" , async( optio
     }
 })
 
+export const updateMenu = createAsyncThunk("menuSlice/updateMenu" , async( options : UpdateMenuOptions , thunkApi ) => {
+    const { id , menuCategoryIds , name , detail , price , onError , onSuccess } = options;
+    try {
+        const response = await fetch(`${config.apiBaseUrl}/menu` , {
+            method : "PUT",
+            headers : {
+                "content-type" : "application/json"
+            },
+            body : JSON.stringify({ id , menuCategoryIds , name , detail , price })
+        });
+        const { updatedMenu , updatedMenuCategoryMenus } = await response.json();
+        thunkApi.dispatch(replaceMenu( updatedMenu ));
+        thunkApi.dispatch(replaceMenuCategoryMenus(updatedMenuCategoryMenus));
+        onSuccess && onSuccess();
+    } catch(err) {
+        onError && onError();
+    }
+})
+
 const menuSlice = createSlice({
     name : "menuSlice",
     initialState ,
@@ -38,10 +57,13 @@ const menuSlice = createSlice({
         },
         addMenu : (state , action : PayloadAction<Menu>) => {
             state.items = [...state.items , action.payload ]
+        },
+        replaceMenu : (state , action : PayloadAction<Menu>) => {
+            state.items = state.items.map(item => item.id === action.payload.id ? action.payload : item );
         }
     }
 })
 
-export const { setMenus , addMenu } = menuSlice.actions;
+export const { setMenus , addMenu , replaceMenu } = menuSlice.actions;
 
 export default menuSlice.reducer;

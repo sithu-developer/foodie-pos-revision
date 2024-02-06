@@ -1,6 +1,7 @@
 import { store } from "@/store";
-import { useAppSelector } from "@/store/hooks";
-import { UpdatedMenuOptions } from "@/types/menu";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import { updateMenu } from "@/store/slices/menu";
+import { UpdateMenuOptions } from "@/types/menu";
 import { Box, Button, Checkbox, Chip, FormControl, InputLabel, ListItemText, MenuItem, OutlinedInput, Select, TextField, Typography } from "@mui/material"
 import { Menu } from "@prisma/client";
 import { useRouter } from "next/router";
@@ -13,8 +14,9 @@ const MenuDetailPage = () => {
     const menuCategoryMenus = useAppSelector(store => store.menuCategoryMenu.items);
     const allMenuCategories = useAppSelector(store => store.menuCategory.items);
     const menuCategories = allMenuCategories.filter(item => !item.isArchived);
-    const [updatedMenu , setUpdatedMenu ] = useState<UpdatedMenuOptions>();
+    const [updatedMenu , setUpdatedMenu ] = useState<UpdateMenuOptions>();
     const currentMenu = menus.find(item => item.id === Number(router.query.id)) as Menu;
+    const dispatch = useAppDispatch();
 
     useEffect(() => {
         if(allMenus.length) {
@@ -26,7 +28,7 @@ const MenuDetailPage = () => {
     if(!updatedMenu || !menuCategories) return null;
 
     const handleUpdateMenu = () => {
-      //here
+      dispatch(updateMenu({ ...updatedMenu , onSuccess : () => { router.push("/backoffice/menu")} }))
     }
 
     return (
@@ -39,10 +41,10 @@ const MenuDetailPage = () => {
             <TextField defaultValue={updatedMenu.price} onChange={(evt) => setUpdatedMenu({...updatedMenu , price : Number(evt.target.value) })} />
             <TextField defaultValue={updatedMenu.detail} onChange={(evt) => setUpdatedMenu({...updatedMenu , detail : evt.target.value })} />
             <FormControl>
-                <InputLabel sx={{ bgcolor : "white"}}>Available for (locations) </InputLabel>
+                <InputLabel sx={{ bgcolor : "white"}}> Related Menu Categories </InputLabel>
                 <Select
                   multiple
-                  label="Available for (locations) "
+                  label=" Related Menu Categories "
                   value={updatedMenu.menuCategoryIds}
                   onChange={(event) => setUpdatedMenu({...updatedMenu , menuCategoryIds : event.target.value as number[]})}
                   input={<OutlinedInput label="Tag" />}
@@ -72,7 +74,7 @@ const MenuDetailPage = () => {
             </FormControl>
             <Box sx={{ display : "flex" , gap : "20px"}}>
                 <Button variant="contained" onClick={() => router.push("/backoffice/menu")}>Cancel</Button>
-                <Button variant="contained" onClick={handleUpdateMenu}>Update</Button>
+                <Button variant="contained" onClick={handleUpdateMenu} disabled={!updatedMenu.name || !updatedMenu.menuCategoryIds.length}>Update</Button>
             </Box>
         </Box>
     )
