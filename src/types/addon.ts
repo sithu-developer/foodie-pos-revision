@@ -9,6 +9,10 @@ export interface AddonSliceInitialState {
 
 export interface NewAddonOptions extends BaseOptions {
     name : string;
-    price ?: number;
+    price ?: number | null;
     addonCategoryId ?: number;
+}
+
+export interface UpdatedAddonOptions extends NewAddonOptions {
+    id : number;
 }
