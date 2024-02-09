@@ -38,7 +38,7 @@ const NewLocationLayout = ( { open , setOpen } : Props) => {
                     setOpen(false);
                     setNewLocation(defaultLocation);
                 }}>Cancel</Button>
-                <Button variant="contained" disabled={newLocation.name === "" || newLocation.street === "" || newLocation.township === "" || newLocation.city === ""} onClick={handleCreateLocation}>Create</Button>
+                <Button variant="contained" disabled={newLocation.name === "" || newLocation.street === "" || newLocation.township === "" || newLocation.city === ""} onClick={handleCreateLocation}>Comfirm</Button>
             </DialogActions>
         </Dialog>
     )

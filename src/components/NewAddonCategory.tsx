@@ -81,7 +81,7 @@ const NewAddonCategory = ({ setOpen , open } : Props) => {
                 setOpen(false);
                 setNewAddonCategory(defaultAddonCategory);
             }} >Cancel</Button>
-            <Button variant="contained" disabled={!newAddonCategory.name || !newAddonCategory.menuIds.length } onClick={handleCreateAddonCategory}>Create</Button>
+            <Button variant="contained" disabled={!newAddonCategory.name || !newAddonCategory.menuIds.length } onClick={handleCreateAddonCategory}>Comfirm</Button>
         </DialogActions>
     </Dialog>
   )

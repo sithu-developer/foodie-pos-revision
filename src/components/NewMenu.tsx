@@ -78,7 +78,7 @@ const NewMenu = ({open , setOpen} : Props) => {
                     setOpen(false);
                     setNewMenu(defaultMenu);
                 }} variant="contained" >Cancel</Button>
-                <Button onClick={handleCreateMenu} disabled={newMenu.name.length === 0 || newMenu.menuCategoryIds.length === 0 } variant="contained" >Create</Button>
+                <Button onClick={handleCreateMenu} disabled={newMenu.name.length === 0 || newMenu.menuCategoryIds.length === 0 } variant="contained" >Comfirm</Button>
             </DialogActions>
         </Dialog>   
     )

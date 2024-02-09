@@ -37,9 +37,9 @@ const MenuDetailPage = () => {
                 <Typography variant="h5">{currentMenu.name}</Typography>
                 <Button variant="outlined" color="error" >Delete</Button>
             </Box>
-            <TextField defaultValue={updatedMenu.name} onChange={(evt) => setUpdatedMenu({...updatedMenu , name : evt.target.value })} />
-            <TextField defaultValue={updatedMenu.price} onChange={(evt) => setUpdatedMenu({...updatedMenu , price : Number(evt.target.value) })} />
-            <TextField defaultValue={updatedMenu.detail} onChange={(evt) => setUpdatedMenu({...updatedMenu , detail : evt.target.value })} />
+            <TextField label="name" defaultValue={updatedMenu.name} onChange={(evt) => setUpdatedMenu({...updatedMenu , name : evt.target.value })} />
+            <TextField label="price" defaultValue={updatedMenu.price} onChange={(evt) => setUpdatedMenu({...updatedMenu , price : Number(evt.target.value) })} />
+            <TextField label="detail" defaultValue={updatedMenu.detail} onChange={(evt) => setUpdatedMenu({...updatedMenu , detail : evt.target.value })} />
             <FormControl>
                 <InputLabel sx={{ bgcolor : "white"}}> Related Menu Categories </InputLabel>
                 <Select

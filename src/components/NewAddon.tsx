@@ -55,7 +55,7 @@ const NewAddon = ( { open , setOpen } : Props) => {
                     setOpen(false);
                     setNewAddon(defaultAddon);
                 }}>Cancel</Button>
-                <Button variant="contained" disabled={!newAddon.name || !newAddon.addonCategoryId} onClick={handleCreateAddon}>Create</Button>
+                <Button variant="contained" disabled={!newAddon.name || !newAddon.addonCategoryId} onClick={handleCreateAddon}>Comfirm</Button>
             </DialogActions>
         </Dialog>
     )

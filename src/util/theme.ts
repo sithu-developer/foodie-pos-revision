@@ -9,10 +9,10 @@ export const theme = createTheme({
       main: "#994D1C",
     },
     info : {
-        main : "#E48F45",
+      main : "#E48F45",
     },
     success : {
-        main : "#F5CCA0" ,
+      main : "#F5CCA0" ,
     }
   },
 });

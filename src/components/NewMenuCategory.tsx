@@ -79,7 +79,7 @@ const NewMenuCategoryLayout = ( { open , setOpen } : Props) => {
                     setOpen(false);
                     setNewMenuCategory(defaultMenuCategory);
                 }}>Cancel</Button>
-                <Button variant="contained" disabled={newMenuCategory.name.length === 0} onClick={handleCreateMenuCategory}>Create</Button>
+                <Button variant="contained" disabled={newMenuCategory.name.length === 0} onClick={handleCreateMenuCategory}>Comfirm</Button>
             </DialogActions>
         </Dialog>
     )

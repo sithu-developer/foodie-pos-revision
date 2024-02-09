@@ -46,7 +46,7 @@ const MenuCategoryDetailPage = () => {
                 <Typography variant="h6">{currentMenuCategory.name}'s Detail Page</Typography>
                 <Button variant="outlined"  color="error" onClick={() => setOpenComfirmation(true)} >Delete</Button>
             </Box>
-            <TextField defaultValue={currentMenuCategory.name} onChange={( event ) => setUpdatedMenuCategory({...updatedMenuCategory , name : event.target.value})} />
+            <TextField label="name" defaultValue={currentMenuCategory.name} onChange={( event ) => setUpdatedMenuCategory({...updatedMenuCategory , name : event.target.value})} />
             <FormControl>
                 <InputLabel sx={{ bgcolor : "white"}}>Available for (locations) </InputLabel>
                 <Select

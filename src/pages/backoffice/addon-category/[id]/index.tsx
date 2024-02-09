@@ -37,7 +37,7 @@ const AddonCategoryDetailPage = () => {
                 <Typography variant="h4">{currentAddonCategory?.name}</Typography>
                 <Button variant="outlined" color="error" >Delete</Button>
             </Box>
-            <TextField defaultValue={currentAddonCategory.name} onChange={(evt) => setUpdatedAddonCategory({...updatedAddonCategory , name : evt.target.value })} />
+            <TextField label="name" defaultValue={currentAddonCategory.name} onChange={(evt) => setUpdatedAddonCategory({...updatedAddonCategory , name : evt.target.value })} />
             <Box>
                 <FormControlLabel control={<Switch defaultChecked={currentAddonCategory.optional} />} label="is Optional ? " onChange={(evt , value) => setUpdatedAddonCategory({...updatedAddonCategory , optional : value })} />
             </Box>
