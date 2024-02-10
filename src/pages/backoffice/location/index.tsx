@@ -13,8 +13,8 @@ const LocationPage = () => {
 
     return (
         <Box>
-            <Box sx={{ display : "flex" , justifyContent : "space-between"}}>
-                <Typography variant="h5">Locations</Typography>
+            <Box sx={{ display : "flex" , justifyContent : "space-between" , mb : "20px"}}>
+                <Typography variant="h4">Locations</Typography>
                 <Box sx={{ display : "flex" , gap : "20px"}}>
                     <Link href={"/backoffice/location/deletedLocation"} style={{ textDecoration : "none"}} >
                         <Button variant="contained" >To deleted Locations</Button>
@@ -23,9 +23,9 @@ const LocationPage = () => {
                 </Box>
             </Box>
             <Box sx={{ display : "flex" , flexWrap : "wrap" , gap : "20px" , mt : "20px"}}>
-                {locations.map(item => <ItemCart key={item.id} id={item.id} fromLocationPage={true} name={item.name} icon={<LocationOnIcon/>} />)}
+                {locations.map(item => <ItemCart key={item.id} locationId={item.id} fromLocationPage={true} name={item.name} icon={<LocationOnIcon/>} />)}
             </Box>
-            <NewLocationLayout open={open} setOpen={setOpen} />
+            <NewLocationLayout open={open} setOpen={setOpen} /> 
         </Box>
     )
 }

@@ -13,7 +13,7 @@ const AddonPage = () => {
 
     return (
         <Box>
-            <Box sx={{ display : "flex" , justifyContent : "space-between"}}>
+            <Box sx={{ display : "flex" , justifyContent : "space-between" , mb : "20px"}}>
                 <Typography variant="h4">Addons</Typography>
                 <Button variant="contained" onClick={() => setOpen(true)}>Create</Button>
             </Box>

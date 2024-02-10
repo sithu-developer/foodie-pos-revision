@@ -13,12 +13,12 @@ const TablePage = () => {
     const selectedLocationId = Number(localStorage.getItem("selectedLocationId"));
     return (
         <Box>
-            <Box sx={{ display : "flex" , justifyContent : "space-between"}}>
+            <Box sx={{ display : "flex" , justifyContent : "space-between" , mb : "20px"}}>
                 <Typography variant="h4" >Tables</Typography>
                 <Button variant="contained" onClick={() => setOpen(true)}>Create</Button>
             </Box>
             <Box sx={{display : "flex" , flexWrap : "wrap" , gap : "20px"}}>
-                {tables.map(item => <ItemCart key={item.id} opacity={selectedLocationId === item.locationId ? 1 : 0.5} name={item.name} icon={<TableBarIcon/>} href={`/backoffice/table/${item.id}`} />)}
+                {tables.map(item => <ItemCart key={item.id} fromTablePage opacity={selectedLocationId === item.locationId ? 1 : 0.5} name={item.name} icon={<TableBarIcon/>} href={`/backoffice/table/${item.id}`} />)}
             </Box>
             <NewTable open={open} setOpen={setOpen} />
         </Box>
