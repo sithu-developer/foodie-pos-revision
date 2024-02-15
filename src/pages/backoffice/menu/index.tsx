@@ -4,6 +4,7 @@ import { Box, Button, Typography } from "@mui/material";
 import RestaurantMenuIcon from '@mui/icons-material/RestaurantMenu';
 import { useState } from "react";
 import NewMenu from "@/components/NewMenu";
+import MenuCard from "@/components/MenuCard";
 
 
 const MenuPage = () => {
@@ -19,7 +20,7 @@ const MenuPage = () => {
                 <Button variant="contained" onClick={() => setOpen(true)} >Create Menu</Button>
             </Box>
             <Box sx={{ mt : "20px" , display : "flex" , flexWrap : "wrap" , gap : "20px"}}>
-                {menus.map(item => <ItemCart key={item.id} name={item.name} icon={<RestaurantMenuIcon/>} href={`/backoffice/menu/${item.id}`} />)}
+                {menus.map(item =><MenuCard href={`/backoffice/menu/${item.id}`} key={item.id} name={item.name} price={item.price} imgUrl={item.imgUrl} />)}
             </Box>
             <NewMenu open={open} setOpen={setOpen} />
         </Box>

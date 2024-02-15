@@ -12,6 +12,7 @@ export interface CreateMenuOptions extends BaseOptions {
     price ?: number | null;
     detail ?: string | null;
     menuCategoryIds : number[];
+    imgUrl ?: string ;
 }
 
 export interface UpdateMenuOptions extends BaseOptions , CreateMenuOptions {

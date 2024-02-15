@@ -2,12 +2,12 @@ import { Box } from "@mui/material"
 import { useDropzone } from "react-dropzone"
 
 interface Props {
-    setSelectedImage : (value : File[]) => void;
+    setSelectedImages : (value : File[]) => void;
 }
 
-const DropZone = ( {setSelectedImage} : Props) => {
+const DropZone = ( {setSelectedImages} : Props) => {
     const onDrop = ( acceptedFiles : File[]) => {
-        setSelectedImage(acceptedFiles);
+        setSelectedImages(acceptedFiles);
     }
     const {getRootProps, getInputProps, isDragActive} = useDropzone({onDrop})
 

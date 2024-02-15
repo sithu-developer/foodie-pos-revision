@@ -5,6 +5,7 @@ import { Box, Button, Checkbox, Chip, Dialog, DialogActions, DialogContent, Dial
 import { MenuCategory } from "@prisma/client";
 import { useState } from "react";
 import DropZone from "./DropZone";
+import { config } from "@/util/config";
 
 interface Props {
     open : boolean;
@@ -20,19 +21,32 @@ const NewMenu = ({open , setOpen} : Props) => {
     const dispatch = useAppDispatch();
     const allMenuCategories = useAppSelector(store => store.menuCategory.items);
     const menuCategories = allMenuCategories.filter(item => !item.isArchived );
-    const [ selectedImage , setSelectedImage] = useState<File[]>([]);
+    const [ selectedImages , setSelectedImages] = useState<File[]>([]);
 
-    const handleCreateMenu = () => {
-      dispatch(createMenu({ ... newMenu , onSuccess : () => {
-        setOpen(false);
-      }}));
+    const handleCreateMenu = async() => {
+      if(selectedImages.length) {
+        const formData = new FormData();
+        formData.append("files" , selectedImages[0]);
+        const response = await fetch(`${config.apiBaseUrl}/imageUpload`, {
+          method : "POST",
+          body : formData
+        });
+        const { imgUrl } = await response.json();
+        dispatch(createMenu({ ... newMenu , imgUrl , onSuccess : () => {
+          setOpen(false);
+        }}))
+      } else {
+        dispatch(createMenu({ ... newMenu , onSuccess : () => {
+          setOpen(false);
+        }}));
+      }
     }
 
     return (
         <Dialog open={open} onClose={() => {
             setOpen(false);
             setNewMenu(defaultMenu);
-            setSelectedImage([]);
+            setSelectedImages([]);
         }} >
             <DialogTitle>New Menu</DialogTitle>
             <DialogContent sx={{ display : "flex" , flexDirection : "column" , gap : "10px" , minWidth : "400px" , maxWidth : "500px"}}>
@@ -75,12 +89,11 @@ const NewMenu = ({open , setOpen} : Props) => {
                       )}
                     </Select>
                 </FormControl>
-                <DropZone setSelectedImage={setSelectedImage}  />
+                <DropZone setSelectedImages={setSelectedImages}  />
                 <Box>
-                  {selectedImage[0] && 
-                  <Box sx={{ display : "flex" , gap : "10px" , alignItems : "center"}}>
-                    <Chip label={selectedImage[0].name}  />
-                    <Box onClick={() => setSelectedImage([])} sx={{ bgcolor : "lightgray" , borderRadius : "50px" , height : "20px" , p : "3px" , cursor : "pointer"}} >x</Box>
+                  {selectedImages[0] && 
+                  <Box>
+                    <Chip label={selectedImages[0].name} onDelete={() => setSelectedImages([])} />
                   </Box>}
                 </Box>
             </DialogContent>
@@ -88,7 +101,7 @@ const NewMenu = ({open , setOpen} : Props) => {
                 <Button onClick={() => {
                     setOpen(false);
                     setNewMenu(defaultMenu);
-                    setSelectedImage([]);
+                    setSelectedImages([]);
                 }} variant="contained" >Cancel</Button>
                 <Button onClick={handleCreateMenu} disabled={newMenu.name.length === 0 || newMenu.menuCategoryIds.length === 0 } variant="contained" >Comfirm</Button>
             </DialogActions>
