@@ -23,12 +23,12 @@ export default async function handler(
     );
     return res.status(200).send({ newMenu , menuCategoryMenus });
   } else if (method === "PUT") {
-    const { id , menuCategoryIds , name , detail, price } = req.body as UpdateMenuOptions;
+    const { id , menuCategoryIds , name , detail, price , imgUrl } = req.body as UpdateMenuOptions;
     const isValid = id && menuCategoryIds && name && detail !== undefined && price !== undefined;
     if(!isValid) return res.status(400).send("Bad request");
     const isExist = await prisma.menu.findUnique({ where : { id , isArchived : false }});
     if(!isExist) return res.status(400).send("Bad request");
-    const updatedMenu = await prisma.menu.update({ where : { id } , data : { name , detail , price }});
+    const updatedMenu = await prisma.menu.update({ where : { id } , data : { name , detail , price , imgUrl }});
     // menuCategory <-> menu
     await prisma.menuCategoryMenu.deleteMany({ where : { menuId : id }});
     const updatedMenuCategoryMenus = await prisma.$transaction(

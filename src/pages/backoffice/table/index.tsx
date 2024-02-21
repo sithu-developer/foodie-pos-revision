@@ -23,6 +23,6 @@ const TablePage = () => {
             <NewTable open={open} setOpen={setOpen} />
         </Box>
     )
-}
+}//errro here
 
 export default TablePage;

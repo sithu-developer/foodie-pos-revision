@@ -16,7 +16,7 @@ const MenuCard = ({href , imgUrl , name , price } : Props) => {
         <CardActionArea>
           <CardMedia
             component="img"
-            image={imgUrl ? `https://${imgUrl}` : "/default-menu.png" }
+            image={imgUrl ? imgUrl : "/default-menu.png" }
             alt={name}
             sx={{objectFit : "contain"}}
           />

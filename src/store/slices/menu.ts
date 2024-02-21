@@ -30,14 +30,14 @@ export const createMenu = createAsyncThunk("menuSlice/createMenu" , async( optio
 })
 
 export const updateMenu = createAsyncThunk("menuSlice/updateMenu" , async( options : UpdateMenuOptions , thunkApi ) => {
-    const { id , menuCategoryIds , name , detail , price , onError , onSuccess } = options;
+    const { id , menuCategoryIds , name , detail , price , imgUrl , onError , onSuccess } = options;
     try {
         const response = await fetch(`${config.apiBaseUrl}/menu` , {
             method : "PUT",
             headers : {
                 "content-type" : "application/json"
             },
-            body : JSON.stringify({ id , menuCategoryIds , name , detail , price })
+            body : JSON.stringify({ id , menuCategoryIds , name , detail , price , imgUrl })
         });
         const { updatedMenu , updatedMenuCategoryMenus } = await response.json();
         thunkApi.dispatch(replaceMenu( updatedMenu ));
