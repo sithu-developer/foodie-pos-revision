@@ -1,3 +1,5 @@
+import { Location } from "@prisma/client";
+
 export interface AppInitialState {
     inited : boolean;
     isLoading : boolean;
@@ -9,3 +11,7 @@ export interface BaseOptions {
     onError ?: (value ?: any ) => void;
 }
 
+export interface SetInitFunctionType {
+    inited : boolean;
+    locations : Location[]
+}

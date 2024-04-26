@@ -15,7 +15,7 @@ const defaultTable : NewTableOptions = {
 
 const NewTable = ({ open , setOpen} : Props ) => {
     const locations = useAppSelector(store => store.location.items).filter(item => !item.isArchived);
-    const [ newTable , setNewTable ] = useState<NewTableOptions>(defaultTable)
+    const [ newTable , setNewTable ] = useState<NewTableOptions>(defaultTable);
     const dispatch = useAppDispatch();
     const handleCreateTable = () => {
         dispatch(createTable({...newTable , onSuccess : () => {

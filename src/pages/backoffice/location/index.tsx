@@ -9,8 +9,9 @@ import Link from "next/link";
 const LocationPage = () => {
     const allLocations = useAppSelector(state => state.location.items);
     const locations = allLocations.filter(item => item.isArchived === false);
-    const [ open , setOpen ] = useState<boolean>(false)
-
+    const [ open , setOpen ] = useState<boolean>(false);
+    const selectedLocationId = Number(localStorage.getItem("selectedLocationId"));
+    
     return (
         <Box>
             <Box sx={{ display : "flex" , justifyContent : "space-between" , mb : "20px"}}>
@@ -23,7 +24,7 @@ const LocationPage = () => {
                 </Box>
             </Box>
             <Box sx={{ display : "flex" , flexWrap : "wrap" , gap : "20px" , mt : "20px"}}>
-                {locations.map(item => <ItemCart key={item.id} locationId={item.id} fromLocationPage={true} name={item.name} icon={<LocationOnIcon/>} />)}
+                {locations.map(item => <ItemCart key={item.id} selectedLocationId={selectedLocationId} locationId={item.id} fromLocationPage={true} name={item.name} icon={<LocationOnIcon/>} />)}
             </Box>
             <NewLocationLayout open={open} setOpen={setOpen} /> 
         </Box>

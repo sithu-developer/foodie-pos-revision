@@ -14,13 +14,14 @@ interface Props {
     fromLocationPage ?: boolean;
     opacity ?: number;
     fromTablePage ?: boolean;
+    selectedLocationId ?: number;
 }
 
-const ItemCart = ({ locationId , icon , name , href , fromLocationPage , opacity = 1 , fromTablePage } : Props) => {
-    const selectedLocationId = useAppSelector(state => state.location.selectedLocationId);
+const ItemCart = ({ locationId , icon , name , href , fromLocationPage , opacity = 1 , fromTablePage , selectedLocationId } : Props) => {
+    
     const dispatch = useAppDispatch();
     const router = useRouter();
-    if(fromTablePage && href) {
+    if(fromTablePage && href ) {
         return (
             <Box sx={{ display : "flex" , flexDirection : "column" , gap : "20px"}}>
                 <Link href={href} style={{ textDecoration : "none"}}>
@@ -29,7 +30,7 @@ const ItemCart = ({ locationId , icon , name , href , fromLocationPage , opacity
                         <Typography variant="h6" sx={{ textAlign : "center"}}>{name}</Typography>
                     </Paper>
                 </Link>
-                <Button variant="contained">Print QR-Code</Button>
+                <Button variant="contained" onClick={() => {}} >Print QR-Code</Button>
             </Box>
         )
     } else if(href) {

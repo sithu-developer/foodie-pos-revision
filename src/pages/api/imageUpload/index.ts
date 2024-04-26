@@ -15,7 +15,8 @@ export default function handler(
     try{
         fileUploadedFunction(req , res , (err) => {
             if(err) {
-                return res.status(500).send("Internal Server Error")
+                console.log(err);
+                return res.status(500).send("Internal Server Error1")
             }
             const files = req.files as Express.MulterS3.File[] ;;
             const file = files[0];
@@ -24,7 +25,7 @@ export default function handler(
         })
     } catch (err) {
         console.log("lower8209 : " , err)
-        return res.status(500).send("Internal Server Error")
+        return res.status(500).send("Internal Server Error2")
     }
 
 }

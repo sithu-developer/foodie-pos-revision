@@ -1,4 +1,4 @@
-import { AppInitialState } from "@/types/app";
+import { AppInitialState, SetInitFunctionType } from "@/types/app";
 import { config } from "@/util/config";
 import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { setUser } from "./user";
@@ -29,7 +29,7 @@ export const appFetch = createAsyncThunk("appSlice/appFetch" , async ( _ , thunk
             addons ,
             tables 
           } = await response.json();
-        thunkApi.dispatch(setInit(true));
+        thunkApi.dispatch(setInit({inited : true , locations}));
         thunkApi.dispatch(setUser(user));
         thunkApi.dispatch(setCompany(company));
         thunkApi.dispatch(setLocations(locations));
@@ -57,8 +57,9 @@ const appSlice = createSlice({
     name : "appSlice",
     initialState , 
     reducers : {
-        setInit : (state , action : PayloadAction<boolean>) => {
-            state.inited = action.payload;
+        setInit : (state , action : PayloadAction<SetInitFunctionType>) => {
+            state.inited = action.payload.inited;
+            localStorage.setItem("selectedLocationId" , String(action.payload.locations[0]));
         }
     }
 });

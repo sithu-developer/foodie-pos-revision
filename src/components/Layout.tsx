@@ -4,7 +4,7 @@ import { useRouter } from "next/router";
 import SideBar from "./SideBar";
 import TopBar from "./TopBar";
 import { useSession } from "next-auth/react";
-import { useAppDispatch } from "@/store/hooks";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { appFetch } from "@/store/slices/app";
 
 interface Props {

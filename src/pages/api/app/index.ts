@@ -4,6 +4,7 @@ import { getServerSession } from 'next-auth'
 import { authOptions } from '../auth/[...nextauth]'
 import { prisma } from '@/util/db';
 import { Company } from '@prisma/client';
+import { qrCodeUploadFunction, qrIamgeLink } from '@/util/fileUploadedFunction';
 
 export default async function handler(
   req: NextApiRequest,
@@ -43,6 +44,9 @@ export default async function handler(
         ];
         const newAddons = await prisma.$transaction( addons.map(item => prisma.addon.create({ data : { name : item.name , addonCategoryId : newAddonCategory.id}})))
         const newTable = await prisma.table.create({ data : {name : "01" , locationId : newLocation.id }})
+        await qrCodeUploadFunction(newLocation.id , newTable.id );
+        const assetUrl = qrIamgeLink(newLocation.id , newTable.id);
+        const newUpdatedTable = await prisma.table.update({ where : { id : newTable.id} , data : { assetUrl }})
         return res.status(200).json({
           user : newUser,
           company : newCompany , 
@@ -54,7 +58,7 @@ export default async function handler(
           addonCategories : [newAddonCategory],
           menuAddonCategories : [newMenuAddonCategory],
           addons : newAddons,
-          tables : [newTable]
+          tables : [newUpdatedTable]
         })
       } else {
         const company = await prisma.company.findFirst({ where : { userId : exisedUser.id  , isArchived : false }}) as Company;

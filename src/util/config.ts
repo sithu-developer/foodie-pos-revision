@@ -5,6 +5,7 @@ interface Config {
     endPoint : string;
     accessKeyId : string;
     secretAccessKey : string;
+    orderAppUrl : string;
 }
 
 export const config : Config = {
@@ -14,4 +15,5 @@ export const config : Config = {
     endPoint : process.env.SPACE_ENDPOINT || "",
     accessKeyId : process.env.SPACE_ACCESS_KEY_ID || "",
     secretAccessKey : process.env.SPACE_SECRET_ACCESS_KEY || "",
+    orderAppUrl : process.env.ORDER_APP_URL || "",
 }
